@@ -1,12 +1,6 @@
 const { S3Client, GetObjectCommand, PutObjectCommand } = require("@aws-sdk/client-s3");
 const sharp = require('sharp');
 
-const s3Client = new S3Client({
-    region: "us-east-1",
-    endpoint: "http://locahost:4566", 
-    forcePathStyle: true
-});
-
 exports.handler = async (event, context) => {
     const srcBucket = event.Records[0].s3.bucket.name;
     const srcKey = decodeURIComponent(
@@ -14,6 +8,12 @@ exports.handler = async (event, context) => {
     );
     const dstBucket = srcBucket;
     const dstKey = `resized/${srcKey}`;
+
+    const s3Client = new S3Client({
+        region: "us-east-1",
+        endpoint: "http://localhost:4566", 
+        forcePathStyle: true
+    });
 
     try {
         // Fetch the original image from S3
