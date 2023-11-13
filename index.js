@@ -11,8 +11,8 @@ exports.handler = async (event, context) => {
 
     const s3Client = new S3Client({
         region: "us-east-1",
-        endpoint: "http://localhost:4566", 
-        forcePathStyle: true
+        // endpoint: "http://localhost:4566",
+        // forcePathStyle: true
     });
 
     try {
