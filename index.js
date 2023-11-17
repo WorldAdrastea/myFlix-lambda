@@ -2,6 +2,13 @@ const { S3Client, GetObjectCommand, PutObjectCommand } = require("@aws-sdk/clien
 const sharp = require('sharp');
 
 exports.handler = async (event, context) => {
+    console.log('Received event:', JSON.stringify(event, null, 2));
+
+    if (!event.Records || event.Records.length === 0) {
+        console.error('Event records are missing or empty.');
+        return 'No records found';
+    }
+    
     const srcBucket = event.Records[0].s3.bucket.name;
     const srcKey = decodeURIComponent(
         event.Records[0].s3.object.key.replace(/\+/g, ' ')
